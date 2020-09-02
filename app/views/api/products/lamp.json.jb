@@ -1,0 +1,6 @@
+{
+  name: @lamp.name,
+  price: @lamp.price,
+  image_url: @lamp.image_url,
+  description: @lamp.description,
+}

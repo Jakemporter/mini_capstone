@@ -1,0 +1,10 @@
+require "http"
+
+
+
+@terminal.each do |product|
+  puts product.name
+  puts product.price
+  puts product.image_url
+  puts product.description
+end

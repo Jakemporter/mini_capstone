@@ -1,4 +1,5 @@
 {
+  id: lamp.id,
   name: @lamp.name,
   price: @lamp.price,
   image_url: @lamp.image_url,

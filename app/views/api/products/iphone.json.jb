@@ -1,4 +1,5 @@
 {
+  id: @iphone.id,
   name: @iphone.name,
   price: @iphone.price,
   image_url: @iphone.image_url,

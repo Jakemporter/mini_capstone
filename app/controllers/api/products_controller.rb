@@ -15,8 +15,4 @@ class Api::ProductsController < ApplicationController
     @iphone = Product.find_by(name: "iPhone 11")
     render "iphone.json.jb"
   end
-  def terminal
-    @terminal = Product.all
-    render "terminal.json.jb"
-  end
 end

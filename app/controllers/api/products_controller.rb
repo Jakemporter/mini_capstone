@@ -4,7 +4,7 @@ class Api::ProductsController < ApplicationController
     render "all.json.jb"
   end
   def product
-    input = params["id"].to_i
+    input = params["id"]
     @product = Product.find_by(id: input)
     render "product.json.jb"
   end

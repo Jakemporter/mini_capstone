@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     get "/allproducts" => "products#allproducts"
-    get "/candle" => "products#candle"
-    get "/lamp" => "products#lamp"
-    get "/iphone" => "products#iphone"
+    get "/product/:id" => "products#product"
+    get "/product" => "products#product"
   end
 end

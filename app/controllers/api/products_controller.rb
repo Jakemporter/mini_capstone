@@ -3,16 +3,9 @@ class Api::ProductsController < ApplicationController
     @all_products = Product.all
     render "all.json.jb"
   end
-  def candle
-    @candle = Product.find_by(name: "candle")
-    render "candle.json.jb"
-  end
-  def lamp
-    @lamp = Product.find_by(name: "lamp")
-    render "lamp.json.jb"
-  end
-  def iphone
-    @iphone = Product.find_by(name: "iPhone 11")
-    render "iphone.json.jb"
+  def product
+    input = params["id"].to_i
+    @product = Product.find_by(id: input)
+    render "product.json.jb"
   end
 end

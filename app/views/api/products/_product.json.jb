@@ -6,6 +6,7 @@
   description: product.description,
   created_at: product.friendly_updated_at,
   is_disounted: product.is_discounted?,
-  tax: product.tax,
-  total: product.total,
+  dollar_amount: number_to_currency(product.price), 
+  tax: number_to_currency(product.tax),
+  total: number_to_currency(product.total),
 }

@@ -8,7 +8,7 @@ class Product < ApplicationRecord
     created_at.strftime("%B%e, %Y")
   end
   def is_discounted?
-    price <= 10
+    price <= 15
   end
   def tax
     price * 0.09

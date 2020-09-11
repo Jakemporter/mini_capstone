@@ -4,6 +4,9 @@ class Product < ApplicationRecord
   validates :description, presence: true
   validates :description, length: { in: 2..800 }
   validates_format_of :image_url, :with => %r{\.(png|jpg|jpeg)$}i, :message => "must have a valid filetype", multiline: true  
+  
+  belongs_to :supplier
+  
   def friendly_updated_at
     created_at.strftime("%B%e, %Y")
   end
@@ -15,8 +18,5 @@ class Product < ApplicationRecord
   end
   def total
     price + tax
-  end
-  def supplier
-    Supplier.find_by(id: supplier_id)
   end
 end

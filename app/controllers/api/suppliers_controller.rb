@@ -23,9 +23,8 @@ class Api::SuppliersController < ApplicationController
   def update
     @supplier = Supplier.find_by(id: params["id"]) 
     @supplier.name = params[:name] || @supplier.name
-    @supplier.price = params[:price] || @supplier.price
-    @supplier.image_url = params[:image_url] || @supplier.image_url
-    @supplier.description = params[:description] || @supplier.description
+    @supplier.email = params[:email] || @supplier.email
+    @supplier.phone_number = params[:phone_number] || @supplier.phone_number
     if @supplier.save
       render "show.json.jb"
     else

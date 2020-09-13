@@ -12,6 +12,7 @@ class Api::SuppliersController < ApplicationController
     name: params[:name],
     email: params[:email],
     phone_number: params[:phone_number],
+    supplier_id: params[:supplier_id],
   )
     if @supplier.save
       render "show.json.jb"

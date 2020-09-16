@@ -34,7 +34,7 @@ class Api::OrdersController < ApplicationController
   end
   def show
     if current_user
-      @order = Order.find_by(id: params[:id])
+      @order = current_user.orders.find_by(id: params[:id])
       render "show.json.jb"
     else
       render json: {denied: "You must be logged in to view orders"}

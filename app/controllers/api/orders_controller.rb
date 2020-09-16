@@ -4,15 +4,19 @@ class Api::OrdersController < ApplicationController
       product = Product.find_by(id: params[:product_id])
       subtotal = product.price * params[:quantity].to_i
       tax = subtotal * 0.09
-      order = Order.create!(
+      @order = Order.new(
         user_id: current_user.id,
         product_id: params[:product_id],
         quantity: params[:quantity],
         subtotal: product.price * params[:quantity].to_i,
-        tax: subtotal * 0.09,
+        tax: tax,
         total: subtotal + tax
         )
-      render json: {order: order}
+      if @order.save
+        render "show.json.jb"
+      else
+        render json: {errors: @order.errors.full_messages}
+      end
     else
       render json: {message: "must be logged in"}
     end
@@ -24,6 +28,12 @@ class Api::OrdersController < ApplicationController
       render "index.json.jb"
     else
       render json: {denied: "Must be logged in to view orders"}
+    end
+  end
+  def show
+    if current_user
+      @order = Order.find_by(id: params[:id])
+      render "show.json.jb"
     end
   end
 end

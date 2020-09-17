@@ -3,6 +3,7 @@
   name: product.name,
   price: product.price,
   images: product.images,
+  categories: product.categories,
   description: product.description,
   created_at: product.friendly_updated_at,
   is_disounted: product.is_discounted?,

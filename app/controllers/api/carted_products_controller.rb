@@ -8,4 +8,8 @@ class Api::CartedProductsController < ApplicationController
       status: "carted"
     )
   end
+  def index
+    @carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
+    render "index.json.jb"
+  end
 end

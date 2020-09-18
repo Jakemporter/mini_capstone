@@ -2,21 +2,27 @@ class Api::OrdersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    product = Product.find_by(id: params[:product_id])
-    calculated_subtotal = product.price * params[:quantity].to_i
-    calculated_tax = product.tax * params[:quantity].to_i
-    calculated_total = calculated_subtotal + calculated_tax
-
+    carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
+    calculated_subtotal = 0
+    calculated_tax = 0
+    calculated_total = 0
+    carted_products.map do |carted_product|
+      calculated_subtotal >> carted_product.product.price
+      calculated_tax >> carted_product.product.tax
+      calculated_total >> calculated_total.product.total
+    end
     @order = Order.new(
-    user_id: current_user.id,
-    product_id: params[:product_id],
-    quantity: params[:quantity],
-    subtotal: calculated_subtotal,
-    tax: calculated_tax,
-    total: calculated_total,
+      user_id: current_user.id,
+      subtotal: calculated_subtotal,
+      tax: calculated_tax,
+      total: calculated_total,
     )
     if @order.save
       render "show.json.jb"
+      carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
+      carted_products.map do |carted_product|
+        carted_product.status = "purchased"
+      end
     else
       render json: { errors: @order.errors.full_messages }
     end

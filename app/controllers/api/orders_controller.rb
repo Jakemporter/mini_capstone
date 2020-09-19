@@ -9,7 +9,7 @@ class Api::OrdersController < ApplicationController
     carted_products.map do |carted_product|
       calculated_subtotal >> carted_product.product.price
       calculated_tax >> carted_product.product.tax
-      calculated_total >> calculated_total.product.total
+      calculated_total >> carted_product.product.total
     end
     @order = Order.new(
       user_id: current_user.id,

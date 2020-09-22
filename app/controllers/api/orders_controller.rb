@@ -18,12 +18,8 @@ class Api::OrdersController < ApplicationController
       total: calculated_total,
     )
     if @order.save
-      carted_products = current_user.carted_products.where(status: "carted")
-      carted_products.each do |carted_product|
-        carted_product.status = "purchased"
-        carted_product.order_id = @order.id
-        carted_product.save
-      end
+      carted_products.update_all(status: "purchased", order_id: @order.id)
+      
       render "show.json.jb"
     else
       render json: { errors: @order.errors.full_messages }

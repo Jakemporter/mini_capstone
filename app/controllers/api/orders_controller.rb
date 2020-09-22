@@ -2,7 +2,7 @@ class Api::OrdersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
+    carted_products = current_user.carted_products.where(status: "carted")
     calculated_subtotal = 0
     calculated_tax = 0
     calculated_total = 0
@@ -12,14 +12,13 @@ class Api::OrdersController < ApplicationController
     end
     calculated_total += calculated_subtotal + calculated_tax
     @order = Order.new(
-      id: @order.id,
       user_id: current_user.id,
       subtotal: calculated_subtotal,
       tax: calculated_tax,
       total: calculated_total,
     )
     if @order.save
-      carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
+      carted_products = current_user.carted_products.where(status: "carted")
       carted_products.each do |carted_product|
         carted_product.status = "purchased"
         carted_product.order_id = @order.id

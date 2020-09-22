@@ -9,6 +9,8 @@
       id: carted_product.id,
       quantity: carted_product.quantity,
       product: carted_product.product,
+      order_id: carted_product.order_id,
+      status: carted_product.status
     }
   end,
 }

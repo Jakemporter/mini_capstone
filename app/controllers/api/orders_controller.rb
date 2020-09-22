@@ -7,10 +7,10 @@ class Api::OrdersController < ApplicationController
     calculated_tax = 0
     calculated_total = 0
     carted_products.map do |carted_product|
-      calculated_subtotal >> carted_product.product.price
-      calculated_tax >> carted_product.product.tax
-      calculated_total >> carted_product.product.total
+      calculated_subtotal += carted_product.quantity * carted_product.product.price
+      calculated_tax += carted_product.quantity * carted_product.product.tax
     end
+    calculated_total += calculated_subtotal + calculated_tax
     @order = Order.new(
       user_id: current_user.id,
       subtotal: calculated_subtotal,
@@ -18,11 +18,13 @@ class Api::OrdersController < ApplicationController
       total: calculated_total,
     )
     if @order.save
-      render "show.json.jb"
       carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
       carted_products.map do |carted_product|
         carted_product.status = "purchased"
+        carted_product.order_id = @order.id
+        carted_product.save
       end
+      render "show.json.jb"
     else
       render json: { errors: @order.errors.full_messages }
     end

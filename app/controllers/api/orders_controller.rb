@@ -12,6 +12,7 @@ class Api::OrdersController < ApplicationController
     end
     calculated_total += calculated_subtotal + calculated_tax
     @order = Order.new(
+      id: @order.id,
       user_id: current_user.id,
       subtotal: calculated_subtotal,
       tax: calculated_tax,
@@ -19,7 +20,7 @@ class Api::OrdersController < ApplicationController
     )
     if @order.save
       carted_products = CartedProduct.where("user_id = ? AND status = ?",  current_user.id, "carted")
-      carted_products.map do |carted_product|
+      carted_products.each do |carted_product|
         carted_product.status = "purchased"
         carted_product.order_id = @order.id
         carted_product.save

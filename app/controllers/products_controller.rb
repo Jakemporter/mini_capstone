@@ -12,7 +12,6 @@ class ProductsController < ApplicationController
   end
   def create
     @product = Product.new(
-      #user_id: 1,
       name: params[:name],
       price: params[:price],
       description: params[:description],
